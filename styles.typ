@@ -1,4 +1,10 @@
+#import "@preview/cetz:0.4.0"
+
 #let primary-color = rgb("#4fade3")
+
+#let bf(x) = {
+  $bold(#math.serif(x))$
+}
 
 #let fmt(number, precision: 3,  sci: true) = {
   if number == 0 {
@@ -218,7 +224,9 @@
     }
   )
 
-  //set math.equation(numbering: "(1)", number-align: bottom)
+  set math.equation(numbering: "(1)", number-align: bottom)
+  // 
+  set figure.caption(position: top)
 
 
   // 🧭 Numeração de seções e listas

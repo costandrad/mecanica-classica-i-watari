@@ -55,5 +55,120 @@
   + Mostre que o ponto médio da barra descreve um arco de circunferência de raio $l/2$ e centro $O$, sendo $O$ o ponto de cruzamento da parede vertical com o piso horizontal.
 
     #solution([
-      
+      Conforme mostrado na @fig-prob-1.16, sejam $x$ e $y$ as coordenadas do ponto médio $M$. Aplicando o teorema de Pitágoas, temos:
+      $
+        x^2 + y^2 = (l/2)^2
+      $<eq-p1.16a>
+
+      Portanto, as coordenadas do ponto médio $M$ descrevem uma circunferência de raio $l/2$ e centro na origem $O = (0, 0)$.
+
+      #figure(
+        caption: [Diagrama do problema 1.16],
+        cetz.canvas({
+          import cetz.draw: *
+          //let (x0, y0) = (2, 3)
+          let L = 5
+          //
+          //let (xm, ym) = (x0/2, y0/2)
+          //let y1 = y0 - L
+
+          let (x, y) = (0, 0)
+          let v0 = 2
+          let T = L/v0
+          let n = 8
+          let dt = T/n
+
+
+          let t0 = 5*T/n
+          let x0 = v0 * t0
+          let y0 = calc.sqrt(calc.pow(L, 2) - calc.pow(x0, 2))
+          let theta = calc.atan2(y0, x0)
+          let y1 = y0 - L
+          let (xm, ym) = (x0/2, y0/2)
+
+
+          // Eixos
+          line((0,0), (x: 5))
+          line((0,0), (y: 5))
+          content((0, 0), anchor: "north-east", padding: 0.1)[$O$]
+          // Barra
+          group({
+            rotate(theta, origin: (0, y0))
+            line((0, y0), (0, y1), stroke: (3pt+blue))
+          })
+
+          circle((0, y0), radius: 2pt, fill: black, name: "A")
+          content("A", $A$, anchor: "east", padding: 0.1)
+
+          circle((x0, 0), radius: 2pt, fill: black, name: "B")
+          content("B", $x_B$, anchor: "north", padding: .1)
+          content("B", $B$, anchor: "south-west", padding: 0.1)
+
+
+
+          line((x0, 0), (x0 + 1.5, 0), mark: (end: "stealth"), stroke: (1.5pt+black), name: "A-veloc")
+          content("A-veloc.end", $v_0$, anchor: "south", padding: 0.1)
+
+          (xm, ym) = (0, L/2)
+
+          circle((0,0), radius: L/2, stroke: (dash: "dashed", paint: gray))
+          circle((xm, ym), radius: 2pt, fill: red, stroke: none, name: "ym-inicial")
+          content("ym-inicial", $l/2$, anchor: "east", padding: 0.1)
+          for i in range(n) {
+            x += v0 * dt
+            y  = calc.sqrt(calc.pow(L, 2) - calc.pow(x, 2))
+            (xm, ym) = (x/2, y/2)
+            circle((xm, ym), radius: 2pt, fill: red, stroke: none, name: "xm-final")
+          }
+          content("xm-final", $l/2$, anchor: "north", padding: 0.2)
+
+          (xm, ym) = (x0/2, y0/2)
+
+          circle((xm, ym), radius: 2pt, fill: black, name: "M")
+          content("M", $M$, anchor: "south-west", padding: 0.1)
+
+          line((xm, 0), (xm, ym), (0, ym), stroke: (dash: "dashed"), name: "M-coord")
+          content("M-coord.start", $x$, anchor: "north", padding: 0.1)
+          content("M-coord.end", $y$, anchor: "east", padding: 0.1)
+        })
+      )<fig-prob-1.16>
+
+      Na @fig-prob-1.16, destacamos em vermelho algumas das posições do ponto $M$ durante o movimento da barra, desde a posição inicial na vertical até a posilção final na horizontal.
     ])
+
+  + Determine a velocidade do ponto médio da barra no instante em que o extremo $B$ está a uma distância $b < l$ da parede.
+
+    #solution([
+      
+      
+      Incialmente observemos que a componente $x$ do ponto $M$ está relacionada com a coordenada $x_B$ no ponto $B$ (que se move com velocidade $v_0$) pela seguinte relação: $x = frac(x_B, 2)$. Assim,
+      $
+        x = x_B/2 &arrow.double dot(x) = frac(dot(x_B), 2)\
+                  &arrow.double dot(x) = frac(v_0, 2)
+      $<eq-p1.16-dot-x>
+
+      Dado que o ponto $M$ descreve uma trajetória no plano $x y$, cujas coordenadas $x$ e $y$ estão relacionadas pela @eq-p1.16a. Derivando essa equação com relação ao tempo, temos:
+
+      $
+        x^2 + y^2 = (l/2)^2 &arrow.double 2x dot(x) + 2y dot(y) = 0 \
+                            &arrow.double dot(y) = - frac(x, y) dot(x)
+      $<eq-p1.16-dot-y-1>
+
+      Isolando $y$ de @eq-p1.16a e substituindo em @eq-p1.16-dot-y-1, temos:
+      $
+        dot(y) = - frac(x, sqrt((l/2)^2 - x^2))dot(x)
+      $<eq-p1.16-dot-y-2>
+
+      Substituindo $dot(x)$ de @eq-p1.16-dot-x em @eq-p1.16-dot-y-2, obtemos:
+
+      $
+        dot(y) = -frac(x, sqrt((l/2)^2 - x^2)) frac(v_0, 2)
+      $<eq-p1.16-dot-y>
+    ])Mostre que  $bf("v") = v bf(tau)$ e $bf("a") = a_t bf(tau) + frac(v^2, rho) bf("n")$, onde $v = frac(d s, d t)$ é a velocidade escalar; $a_t = frac(d^2 s, d t^2)$, a aceleração tangencial; $bf(tau) = frac(d bf("r"), d s)$, o vetor unitário tangente à trajetória; e, finalmente, $bf("n") = rho frac(d^2 bf("r"), d s^2)$, o vetor unitário normal à trajetória. Aqui, $s$ é o comprimento da trajetória, medido a partir da posição inicial e $rho$ é o raio da curvatura da trajetória no ponto em questão. Qual o siginificado do termo $frac(v^2, rho)$?
+
++ 
+
+  #solution([
+
+  ])
+
