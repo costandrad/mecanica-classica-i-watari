@@ -2,10 +2,10 @@
 
 #show: template.with(
   book: (
-    title: [Título do Livro],
+    title: [Mecânica Clássica: Volume I],
     author: (
-      long: [Nome Sobrenome],
-      short: [Sobrenome, N.]
+      long: [Kazunori Watari],
+      short: [Watari, K.]
     )
   ),
   author: [Igo da Costa Andrade]

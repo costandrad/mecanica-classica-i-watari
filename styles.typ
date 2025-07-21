@@ -1,4 +1,4 @@
-#let primary-color = rgb("#f00024")
+#let primary-color = rgb("#4fade3")
 
 #let fmt(number, precision: 3,  sci: true) = {
   if number == 0 {
@@ -74,7 +74,7 @@
       column-gutter: 15pt,
       align: (left+bottom, right+horizon),
       [
-        #cite(<Halliday2>, form: "full")
+        #cite(<watari-1>, form: "full")
       ],
       [
         #image("assets/images/capa.png", width: 3cm)
